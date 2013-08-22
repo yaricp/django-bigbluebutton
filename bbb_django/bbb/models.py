@@ -1,13 +1,17 @@
+#-*- coding: utf-8 -*-
 from django.db import models
 from django import forms
-from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 
 from urllib2 import urlopen
 from urllib import urlencode
 from hashlib import sha1
 import xml.etree.ElementTree as ET
 import random
+from time import gmtime, strftime
+
+import settings
 
 def parse(response):
     try:
@@ -18,153 +22,261 @@ def parse(response):
         else:
             raise
     except:
-        return None
+        return 'error'
+        
+def connect_bbb(url):
+    try: result = urlopen(url).read()
+    except: result = 'error'
+    return result
+        
+class Record():
+    id = ''
+    type = ''
+    url = ''
+    published = ''
+    starttime = ''
+    endtime = ''
 
 class Meeting(models.Model):
 
-    name = models.CharField(max_length=100, unique=True)
-    meeting_id = models.CharField(max_length=100, unique=True)
-    attendee_password = models.CharField(max_length=50)
-    moderator_password = models.CharField(max_length=50)
-
+    name = models.CharField(verbose_name=_(u'name'), max_length=100, unique=True)
+    attendee_password = models.CharField(verbose_name=_(u'password of user'), max_length=50)
+    moderator_password = models.CharField(verbose_name=_(u'password of moderator'),max_length=50)
+    duration = models.TimeField(verbose_name=_(u'duration'),
+                                blank=True, 
+                                null=True, 
+                                )
+    record = models.BooleanField(verbose_name=_(u'make record'),default=False)
+    timestart = models.DateTimeField(verbose_name=_(u'data time of start'),
+                                    default=strftime("%Y-%m-%d %H:%M", gmtime()), 
+                                    )
+    timestop = models.DateTimeField(verbose_name=_(u'date time of end'),null=True)
+    public = models.BooleanField(verbose_name=_(u'is public'),default=True)
+    openout = models.BooleanField(verbose_name=_(u'is open from out'),default=True)
+    owner = models.ForeignKey(User)
+    running = ''
+    info = None
+    
     @classmethod
     def api_call(self, query, call):
         prepared = "%s%s%s" % (call, query, settings.SALT)
         checksum = sha1(prepared).hexdigest()
         result = "%s&checksum=%s" % (query, checksum)
         return result
-
+    
     def is_running(self):
         call = 'isMeetingRunning'
         query = urlencode((
-            ('meetingID', self.meeting_id),
+            ('meetingID', 'meeting_'+str(self.id)),
         ))
         hashed = self.api_call(query, call)
         url = settings.BBB_API_URL + call + '?' + hashed
-        result = parse(urlopen(url).read())
-        if result:
+        result = parse(connect_bbb(url))
+        print result
+        if result=='error':
+            return 'error'
+        elif result!=2:
             return result.find('running').text
         else:
-            return 'error'
+            return 'not running'
 
-    @classmethod
-    def end_meeting(self, meeting_id, password):
+    def end_meeting(self,password):
         call = 'end'
         query = urlencode((
-            ('meetingID', meeting_id),
+            ('meetingID', 'meeting_'+str(self.id)),
             ('password', password),
         ))
         hashed = self.api_call(query, call)
         url = settings.BBB_API_URL + call + '?' + hashed
-        result = parse(urlopen(url).read())
+        print url
+        result = parse(connect_bbb(url))
         if result:
             pass
         else:
             return 'error'
 
     @classmethod
-    def meeting_info(self, meeting_id, password):
+    def meeting_info(self, id, password):
         call = 'getMeetingInfo'
         query = urlencode((
-            ('meetingID', meeting_id),
+            ('meetingID', 'meeting_'+str(id)),
             ('password', password),
         ))
         hashed = self.api_call(query, call)
         url = settings.BBB_API_URL + call + '?' + hashed
-        r = parse(urlopen(url).read())
+        print url
+        r = parse(connect_bbb(url))
         if r:
             # Create dict of values for easy use in template
             d = {
-                'start_time': r.find('startTime').text,
-                'end_time': r.find('endTime').text,
-                'participant_count': r.find('participantCount').text,
-                'moderator_count': r.find('moderatorCount').text,
-                'moderator_pw': r.find('moderatorPW').text,
-                'attendee_pw': r.find('attendeePW').text,
-                'invite_url': reverse('join', args=[meeting_id]),
+                _(u'participant count'): r.find('participantCount').text,
+                _(u'moderator count'): r.find('moderatorCount').text,
+                _(u'password of user'): r.find('attendeePW').text,
+                _(u'password of moderator'): r.find('moderatorPW').text,
             }
             return d
         else:
             return None
-
+            
     @classmethod
-    def get_meetings(self):
+    def url_meetings(self):
         call = 'getMeetings'
         query = urlencode((
             ('random', 'random'),
         ))
         hashed = self.api_call(query, call)
         url = settings.BBB_API_URL + call + '?' + hashed
-        result = parse(urlopen(url).read())
-        if result:
-            # Create dict of values for easy use in template
-            d = []
-            r = result[1].findall('meeting')
-            for m in r:
-                meeting_id = m.find('meetingID').text
-                password = m.find('moderatorPW').text
-                d.append({
-                    'name': meeting_id,
-                    'running': m.find('running').text,
-                    'moderator_pw': password,
-                    'attendee_pw': m.find('attendeePW').text,
-                    'info': Meeting.meeting_info(
-                        meeting_id,
-                        password)
-                })
-            return d
-        else:
-            return 'error'
-
-    def start(self):
-        call = 'create' 
-        voicebridge = 70000 + random.randint(0,9999)
+        return url
+    
+    @classmethod
+    def del_record(self, recID):
+        call = 'deleteRecordings'
         query = urlencode((
-            ('name', self.name),
-            ('meetingID', self.meeting_id),
+            ('recordID', str(recID)),
+        ))
+        hashed = self.api_call(query, call)
+        url = settings.BBB_API_URL + call + '?' + hashed
+        print url
+        r = parse(connect_bbb(url))
+        return r
+
+    @classmethod
+    def get_meetings(self, user=None, admin=None):
+        if user:
+            if admin:
+                meetings = Meeting.objects.all()
+            else:
+                meetings = Meeting.objects.filter(owner=user)
+        else:
+            meetings = Meeting.objects.filter(public=True)
+        #list_id=['meeting_'+str(m.id) for m in archives]
+        call = 'getMeetings'
+        query = urlencode((
+            ('random', 'random'),
+        ))
+        hashed = self.api_call(query, call)
+        url = settings.BBB_API_URL + call + '?' + hashed
+        result = parse(connect_bbb(url))
+        d = []
+        print str(dir(result[1]))
+        for meeting in meetings:
+            if result!='error' and result:
+                list_meeting_bbb = result[1].findall('meeting')
+                for m in list_meeting_bbb:
+                    meetingID=m.find('meetingID').text
+                    if 'meeting_'+str(meeting.id) == meetingID:
+                        meeting.running = m.find('running').text
+                        meeting.info = meeting.meeting_info(
+                                                    meeting.id,
+                                                    meeting.moderator_password)
+            d.append(meeting)
+        return d
+
+
+    def create_and_get_url(self):
+        call = 'create'
+        voicebridge = 70000 + random.randint(0,9999)
+        #if not self.meeting_id:
+        mettingID='meeting_'+str(self.id)
+        #else:
+        #    mettingID=self.meeting_id
+        query = urlencode((
+            ('meetingID', mettingID),
+            ('name', self.name.encode('utf-8')), 
             ('attendeePW', self.attendee_password),
             ('moderatorPW', self.moderator_password),
             ('voiceBridge', voicebridge),
-            ('welcome', "Welcome!"),
+            ('logoutURL ', settings.logoutURL), 
+            ('duration', self.duration), 
+            ('record', self.record), 
+            ('welcome', _(u'Welcome!')),
         ))
         hashed = self.api_call(query, call)
         url = settings.BBB_API_URL + call + '?' + hashed
-        result = parse(urlopen(url).read())
-        if result:
-            return result
-        else:
-            raise
-
+        print '!'+url
+        result = parse(connect_bbb(url))
+        return result
+    
     @classmethod
-    def join_url(self, meeting_id, name, password):
-        call = 'join'
+    def change_public_record(self, record_id, publish):
+        call = 'publishRecordings'
+        if publish=='true':
+            publish='false'
+        else:
+            publish='true'
         query = urlencode((
-            ('fullName', name),
-            ('meetingID', meeting_id),
-            ('password', password),
+            ('recordID', record_id),
+            ('publish', publish ), 
         ))
         hashed = self.api_call(query, call)
         url = settings.BBB_API_URL + call + '?' + hashed
-        return url
+        result = parse(connect_bbb(url))
+        return result
+    
+    def get_records(self):
+        call = 'getRecordings'
+        query = urlencode((
+            ('meetingID', 'meeting_'+str(self.id)),
+        ))
+        hashed = self.api_call(query, call)
+        url = settings.BBB_API_URL + call + '?' + hashed
+        result = parse(connect_bbb(url))
+        records=[]
+        if result=='error':
+            return result
+        if result:
+            for r in result.find('recordings').findall('recording'):
+                rec=Record()
+                rec.id=r.find('recordID').text
+                playbacks=r.findall('playback')
+                rec.published = r.find('published').text
+                rec.starttime = strftime('%d-%m-%Y %H:%M',gmtime(int(r.find('startTime').text)))
+                rec.endtime = strftime('%d-%m-%Y %H:%M',gmtime(int(r.find('endTime').text)))
+                for p in playbacks:
+                    for f in p.findall('format'):
+                        rec.type=f.find('type').text
+                        rec.url=f.find('url').text
+                        
+                records.append(rec)
+        return records
 
-    class CreateForm(forms.Form):
-        name = forms.SlugField()
-        attendee_password = forms.CharField(
-            widget=forms.PasswordInput(render_value=False))
-        moderator_password= forms.CharField(
-            widget=forms.PasswordInput(render_value=False))
+    def join_url(self, name, password, start=0):
+        call = 'join'
+        flag=0
+        if start==0:
+            if self.is_running()!='false':
+                flag=1
+            else:
+                url='not running'
+        else:
+            flag=1
+        if flag==1:
+            query = urlencode((
+                ('fullName', name),
+                ('meetingID', 'meeting_'+str(self.id)),
+                ('password', password),
+            ))
+            hashed = self.api_call(query, call)
+            url = settings.BBB_API_URL + call + '?' + hashed
+        return url
+        
+    def get_body_join_mail(self):
+        out='subject=Приглашение на Видеоконференцию '+settings.FACILITY+'.'
+        out+='&body=\n'\
+                'Приглашаем Вас на видеоконференцию "'+self.name.encode('utf-8')+'", которая состоится '
+        out+=str(self.timestart)+' и продлится '+str(self.duration).encode('utf-8')+'.\n'
+        out+='Пароль для входа участника: '+ self.attendee_password.encode('utf-8')+' \n'
+        out+='Для входа пройдите по ссылке "http://localhost:8000/bbb/meeting/'+str(self.id)+'/join"'
+        return out
+
 
         def clean(self):
             data = self.cleaned_data
 
-            # TODO: should check for errors before modifying
-            data['meeting_id'] = data.get('name')
-
             if Meeting.objects.filter(name = data.get('name')):
-                raise forms.ValidationError("That meeting name is already in use")
+                raise forms.ValidationError(_(u'There is duplicate of conference!'))
             return data
 
-    class JoinForm(forms.Form):
-        name = forms.CharField(label="Your name")
-        password = forms.CharField(
-            widget=forms.PasswordInput(render_value=False))
+    
+            
+    

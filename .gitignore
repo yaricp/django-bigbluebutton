@@ -10,6 +10,7 @@ log/
 src/
 tmp/
 db/
+*.db
 
 # Backup files
 *~.nib

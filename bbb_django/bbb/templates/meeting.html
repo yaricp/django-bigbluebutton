@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans 'Conference' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Conference' %}</h2>
+{{form.media}}
+    <form action="." method=POST>
+        <table>
+            {{form}}
+            <tr>
+                <td></td>
+                <td><input type="submit" name="save" value="{% trans 'Save' %}"></td>
+            </tr>
+        </table>
+    </form>
+    
+<p><a href="../{{meeting.id}}/join">{% trans 'link to invite other people' %}</a>
+</p>
+<p>{% trans 'Records' %}<p>
+<p>{{mess}}</p>
+<table width="90%" cellspacing="0" cellpadding="0" border="1">
+    {% for rec in recordings %}
+        <tr>
+            <td>{{rec.starttime}}</td>
+            <td><a href="{{rec.url}}">{% trans 'Show it' %}</a></td>
+            
+            <td>{% if rec.published == 'true' %}
+                    {% trans 'is public' %}
+                {% else %}
+                    {% trans 'is private' %}
+                {% endif %}
+                <p> 
+                <a href="{% url edit_rec meeting.id rec.id rec.published%}">{% trans 'change' %}</a>
+                </p>
+            </td>
+            <td>
+                <form method="POST" action="{% url del_rec rec.id %}">
+                            {% csrf_token %}
+                            <input type=submit value="{% trans 'delete' %}">
+                </form>
+            </td>
+            <td>
+                <div class="more-info">
+                    <a href="#">{% trans 'more info' %}</a>
+                    <div class= "info" id="info" >
+                        <table>
+                            
+                            <tr>
+                                <th>{% trans 'time of end' %}</td>
+                                <td>{{rec.endtime}}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans 'type of record' %}</td>
+                                <td>{{rec.type}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        
+    {%endfor%}
+</table>
+{% endblock %}

@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans 'Video conferences' %}{% endblock %}
+
+{% block title %}{% trans 'Video conferences is available on our server' %}{% endblock %}
 
 {% block content %}
-<h2>{% trans 'Video conferences' %}:</h2>
-<p><a href="../create">{% trans 'create conference (schedule)' %}</a></p>
-
-<p>{% trans 'list of my conferences' %}:</p>
+<h2>{% trans 'Video conferences is available on our server' %}</h2>
 <table   width="90%" cellspacing="0" cellpadding="0" border="1">
-    {% for a in my_meetings%}
+    {% for a in meetings%}
         <tr>
             <td>
                 <div class="more-info">
@@ -16,7 +14,7 @@
                         <span class="status running">{% trans 'is running' %}</span>
                     {% else %}
                         {% if a.timestop %}
-                            <span class="status notrunning">{% trans 'ended' %}</span>
+                            <span class="status notrunning">{% trans 'is ended' %}</span>
                         {% else %}
                             <span class="status notrunning">{% trans 'is not running' %}</span>
                         {% endif %}
@@ -38,72 +36,49 @@
                                 <td>{{a.timestop}}</td>
                             </tr>
                             <tr>
-                                <th>{% trans 'Who can invite' %}</td>
-                                <td>
-                                    {% if a.public %}
-                                        {% trans 'everybody' %}
-                                    {% else %}
-                                        {% trans 'who have link to invite' %}
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>{% trans 'available' %}</td>
+                                <th>{% trans 'Available' %}</td>
                                 <td>
                                     {% if a.openout %}
-                                        {% trans 'everywhere' %}
+                                        {% trans 'anywhere' %}
                                     {% else %}
-                                        {% trans 'inside our lans' %}
+                                        {% trans 'only in our lans' %}
                                     {% endif %}
                                 </td>
                             </tr>
                             <tr>
-                                <th>{% trans 'recording' %}</td>
+                                <th>{% trans 'record' %}</td>
                                 <td>
                                     {% if a.record %}
-                                        {% trans 'record running' %}
+                                        {% trans 'record is running' %}
                                     {% else %}
-                                        {% trans 'record not running' %}
+                                        {% trans 'record is not running' %}
                                     {% endif %}
                                 </td>
                             </tr>
                             <tr>
                                 <th>{% trans 'link to invite' %}</td>
                                 <td>
-                                    <a href="../meeting/{{a.id}}/join">{% trans 'here' %}</a>
+                                    <a href="../meeting/{{a.id}}/join">{% trans ' in here' %}</a>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </td>
-            <td><a href="{% url conf a.id %}">{{a.name}}</a></td>
+            <td>{{a.name}}</td>
+            <td><a href="mailto:{{a.owner.email}}" title="{% trans 'write to author' %}">{{a.owner.last_name}} {{a.owner.first_name}}</a></a></td>
+            <td>{{a.timestart}} - {{a.timestop}}</td>            
             <td>
                 {% if a.running == 'true' %}
                     <form method="POST" action="{% url join a.id %}">
                         <input type="submit" value="{% trans 'enter' %}">
                     </form> 
-                    <form method="POST" action="{% url end a.id a.moderator_password %}">
-                        {% csrf_token %}
-                        <input type="submit" value="{% trans 'end' %}">
-                    </form>
-                {% else %}
-                    <form method="POST" action="{% url start_conf a.id %}">
-                        {% csrf_token %}
-                        <input type=submit value="{% trans 'start' %}">
-                    </form>
                 {% endif %}
-            </td>
-            <td>
-                <form method="POST" action="{% url del_conf a.id %}">
-                    {% csrf_token %}
-                    <input type=submit value="{% trans 'delete' %}">
-                </form>
             </td>
             
         </tr>
     {% empty %}
-        <tr><td>{% trans 'You have not conferences now' %}</td></tr>
+        <tr><td>{% trans 'We have not video conferences now' %}</td></tr>
     {%endfor%}
 </table>
 {% endblock %}

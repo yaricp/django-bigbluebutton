@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans 'Enter in conference' %} {% endblock %}
+{% block title %}{% trans 'Conference' %}{% endblock %}
 
 {% block content %}
 <form action="" method="POST">
 {% csrf_token %}
-<h2>{% trans 'Enter in conference' %} "{{ meeting.name }}"</h2>
-<p>{% trans 'you can invite other people ' %} <a href="/bbb/meeting/{{ meeting.id }}/join">{% trans 'in here' %} URL</a></p>
+<h2>{% trans 'enter in conference' %} {{ meeting_name }}'</h2>
+<p>{% trans 'you can invite other people ' %} <a href="/meeting/{{ meeting_name }}/join">{% trans 'in here' %} URL</a></p>
 <table>
+    {{form.media}}
     {{form}}
     <tr>
         <th></th>

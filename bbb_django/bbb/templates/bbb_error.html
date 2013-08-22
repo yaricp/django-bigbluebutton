@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans 'Error!' %}{% endblock %}
+
+{% block content %}
+
+<h2>{% trans 'Attantion! error :' %}</h2>
+<p style="color:red"> {{ mess }}</p>
+
+{% endblock %}

@@ -1,0 +1,439 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bbb-conf\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-21 16:55+0700\n"
+"PO-Revision-Date: 2013-08-21 16:21+0300\n"
+"Last-Translator: Yaroslav Pisarev <yaricp@gmail.com>\n"
+"Language-Team: Russian \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+
+#: bbb/forms.py:41 bbb/models.py:46
+msgid "name"
+msgstr "Название"
+
+#: bbb/forms.py:42 bbb/models.py:47 bbb/models.py:118
+msgid "password of user"
+msgstr "Пароль пользователя"
+
+#: bbb/forms.py:43 bbb/models.py:48 bbb/models.py:119
+msgid "password of moderator"
+msgstr "Пароль модератора"
+
+#: bbb/forms.py:44 bbb/models.py:54
+msgid "data time of start"
+msgstr "Дата и время начала"
+
+#: bbb/forms.py:51 bbb/models.py:49
+msgid "duration"
+msgstr "Длительность"
+
+#: bbb/forms.py:56 bbb/models.py:53
+msgid "make record"
+msgstr "Записывать"
+
+#: bbb/forms.py:57 bbb/models.py:58 bbb/templates/meeting.html:29
+msgid "is public"
+msgstr "Публичная"
+
+#: bbb/forms.py:58 bbb/models.py:59
+msgid "is open from out"
+msgstr "Доступна извне"
+
+#: bbb/forms.py:64 bbb/models.py:281
+msgid "There is duplicate of conference!"
+msgstr "Конференция с таким именем уже существует"
+
+#: bbb/forms.py:68
+msgid "login"
+msgstr "Имя"
+
+#: bbb/forms.py:69
+msgid "password"
+msgstr "Пароль"
+
+#: bbb/models.py:57
+msgid "date time of end"
+msgstr "Дата и время окончания"
+
+#: bbb/models.py:116
+msgid "participant count"
+msgstr "Количество участников"
+
+#: bbb/models.py:117
+msgid "moderator count"
+msgstr "Количество модераторов"
+
+#: bbb/models.py:196
+msgid "Welcome!"
+msgstr "Добро пожаловать!"
+
+#: bbb/views.py:29
+msgid "Unknown error!"
+msgstr "Неизвестная ошибка!"
+
+#: bbb/views.py:41
+
+msgid "sorry! server BBB unavailable now"
+msgstr "Извините в данный момент сервер конференций недоступен"
+
+#: bbb/views.py:44
+msgid "sorry!You can`t start this conference"
+msgstr "Вам запрещено запускать эту конференцию"
+
+#: bbb/views.py:57 bbb/views.py:141 bbb/views.py:168 bbb/views.py:189
+#: bbb/views.py:206 bbb/views.py:223
+
+msgid "Server BBB unavailable now"
+msgstr "Сервер конференций недоступен"
+
+#: bbb/views.py:99
+msgid "sorry!You can`t show this page"
+msgstr "Вам запрещено просматривать эту страницу"
+
+#: bbb/views.py:116
+msgid "sorry!You can`t edit this conference"
+msgstr "Вам запрещено править эту конференцию"
+
+#: bbb/views.py:143 bbb/views.py:170
+msgid ""
+"This conference is not running now. Please ask to creator of this conference "
+"to start it"
+msgstr ""
+"Конференция сейчас не запущена, подождите начала или обратитесь к "
+"организатору конференции"
+
+#: bbb/views.py:172
+msgid "Sorry! This conference is available only into the net of "
+msgstr "Данная конференция доступна только в сетях учреждения "
+
+#: bbb/views.py:192 bbb/templates/edit.html:3 bbb/templates/meeting.html:3
+#: bbb/templates/meeting.html.py:6
+
+msgid "Conference"
+msgstr "Конференция"
+
+#: bbb/views.py:192
+
+msgid " is ended."
+msgstr " закончена"
+
+#: bbb/views.py:196
+msgid "fail to stop conference "
+msgstr "Не удалось закончить конференцию "
+
+#: bbb/views.py:207
+msgid "Record "
+msgstr "Запись"
+
+#: bbb/views.py:207 bbb/views.py:235
+msgid " is deleted"
+msgstr " удалена"
+
+#: bbb/views.py:212
+msgid "fail to delete record "
+msgstr "Не удалось удалить запись "
+
+#: bbb/views.py:215
+msgid "You can`t to delete record"
+msgstr "Вам запрещено удалять записи"
+
+#: bbb/views.py:227
+
+msgid "You can`t to edit record"
+msgstr "Вам запрещено удалять записи"
+
+#: bbb/views.py:235
+msgid "Conference "
+msgstr "Конференция"
+
+#: bbb/views.py:240
+msgid "fail to delete conference "
+msgstr "Не удалось удалить конференцию "
+
+#: bbb/views.py:244
+msgid "You can`t to delete conference"
+msgstr "Вам запрещено удалять конференции"
+
+#: bbb/templates/admin_meetings.html:4 bbb/templates/admin_meetings.html:7
+#: bbb/templates/sharing_meetings.html:3 bbb/templates/sharing_meetings.html:6
+
+msgid "Video conferences is available on our server"
+msgstr "Данная конференция доступна только в сетях учреждения "
+
+#: bbb/templates/admin_meetings.html:14 bbb/templates/meetings.html:16
+#: bbb/templates/sharing_meetings.html:13
+msgid "is running"
+msgstr "запущена"
+
+#: bbb/templates/admin_meetings.html:17
+
+msgid "is ended"
+msgstr " закончена"
+
+#: bbb/templates/admin_meetings.html:19 bbb/templates/meetings.html:21
+#: bbb/templates/sharing_meetings.html:18
+msgid "is not running"
+msgstr "не запущена"
+
+#: bbb/templates/admin_meetings.html:31 bbb/templates/meetings.html:33
+#: bbb/templates/sharing_meetings.html:30
+msgid "begin"
+msgstr "начало"
+
+#: bbb/templates/admin_meetings.html:35 bbb/templates/meetings.html:37
+#: bbb/templates/meetings.html.py:88 bbb/templates/sharing_meetings.html:34
+msgid "end"
+msgstr "конец"
+
+#: bbb/templates/admin_meetings.html:39
+msgid "Available"
+msgstr "Доступно"
+
+#: bbb/templates/admin_meetings.html:42
+msgid "anywhere"
+msgstr "всем"
+
+#: bbb/templates/admin_meetings.html:44
+msgid "only in our lans"
+msgstr "приглашенным"
+
+#: bbb/templates/admin_meetings.html:49
+
+msgid "record"
+msgstr "Запись"
+
+#: bbb/templates/admin_meetings.html:52
+msgid "record is running"
+msgstr "ведется"
+
+#: bbb/templates/admin_meetings.html:54
+msgid "record is not running"
+msgstr "не ведется"
+
+#: bbb/templates/admin_meetings.html:59 bbb/templates/meetings.html:71
+msgid "link to invite"
+msgstr "ссылка на вход в конференцию"
+
+#: bbb/templates/admin_meetings.html:61
+msgid " in here"
+msgstr "здесь"
+
+#: bbb/templates/admin_meetings.html:69 bbb/templates/sharing_meetings.html:68
+msgid "write to author"
+msgstr "написать автору"
+
+#: bbb/templates/admin_meetings.html:74 bbb/templates/meetings.html:84
+msgid "enter"
+msgstr "вход"
+
+#: bbb/templates/admin_meetings.html:81
+
+msgid "We have not video conferences now"
+msgstr "У нас нет доступных конференций сейчас "
+
+#: bbb/templates/base.html:17
+
+msgid "Videoconferences"
+msgstr "Видеоконференции"
+
+#: bbb/templates/base.html:23
+msgid "You enter as"
+msgstr "Вы вошли как "
+
+#: bbb/templates/base.html:23
+msgid "log out"
+msgstr "Выйти"
+
+#: bbb/templates/base.html:25
+msgid "log in"
+msgstr "Войти"
+
+#: bbb/templates/bbb_error.html:3
+msgid "Error!"
+msgstr "Ошибка!"
+
+#: bbb/templates/bbb_error.html:7
+msgid "Attantion! error :"
+msgstr "Внимание! ошибка"
+
+#: bbb/templates/create.html:3 bbb/templates/meetings.html:3
+#: bbb/templates/meetings.html.py:6
+msgid "Video conferences"
+msgstr "Видео Конференции"
+
+#: bbb/templates/create.html:6
+msgid "Create conference"
+msgstr "Создать конференцию"
+
+#: bbb/templates/create.html:14
+msgid "create"
+msgstr "Создать"
+
+#: bbb/templates/edit.html:8
+
+msgid "enter in conference"
+msgstr "Войти в конференцию"
+
+#: bbb/templates/edit.html:9 bbb/templates/join.html:9
+msgid "you can invite other people "
+msgstr "Вы можете пригласить других участников"
+
+#: bbb/templates/edit.html:9 bbb/templates/join.html:9
+msgid "in here"
+msgstr "здесь"
+
+#: bbb/templates/edit.html:16 bbb/templates/join.html:15
+msgid "invite"
+msgstr "войти"
+
+#: bbb/templates/home.html:3
+
+msgid "Conferences"
+msgstr "Конференции"
+
+#: bbb/templates/home.html:8
+msgid "create new"
+msgstr "Создать"
+
+#: bbb/templates/home.html:9 bbb/templates/meetings.html:9
+
+msgid "list of my conferences"
+msgstr "Список моих конференций"
+
+#: bbb/templates/home.html:11
+
+msgid "manage conferences"
+msgstr "Управление конференциями"
+
+#: bbb/templates/join.html:3 bbb/templates/join.html.py:8
+
+msgid "Enter in conference"
+msgstr "Войти в конференцию"
+
+#: bbb/templates/meeting.html:13
+msgid "Save"
+msgstr "Сохранить"
+
+#: bbb/templates/meeting.html:18
+msgid "link to invite other people"
+msgstr "ссылка для приглашения участников"
+
+#: bbb/templates/meeting.html:20
+
+msgid "Records"
+msgstr "Запись"
+
+#: bbb/templates/meeting.html:26
+msgid "Show it"
+msgstr "Посмотреть"
+
+#: bbb/templates/meeting.html:31
+msgid "is private"
+msgstr "По приглашениям"
+
+#: bbb/templates/meeting.html:34
+msgid "change"
+msgstr "изменить"
+
+#: bbb/templates/meeting.html:40 bbb/templates/meetings.html:100
+
+msgid "delete"
+msgstr "удалить"
+
+#: bbb/templates/meeting.html:45
+msgid "more info"
+msgstr "подробнее"
+
+#: bbb/templates/meeting.html:50
+
+msgid "time of end"
+msgstr "Дата и время окончания"
+
+#: bbb/templates/meeting.html:54
+
+msgid "type of record"
+msgstr "Тип записи"
+
+#: bbb/templates/meetings.html:7
+msgid "create conference (schedule)"
+msgstr "Создать конференцию (запланировать)"
+
+#: bbb/templates/meetings.html:19 bbb/templates/sharing_meetings.html:16
+
+msgid "ended"
+msgstr "закончена"
+
+#: bbb/templates/meetings.html:41
+msgid "Who can invite"
+msgstr "Кто может участвовать"
+
+#: bbb/templates/meetings.html:44
+msgid "everybody"
+msgstr "все"
+
+#: bbb/templates/meetings.html:46
+msgid "who have link to invite"
+msgstr "по приглашениям"
+
+#: bbb/templates/meetings.html:51 bbb/templates/sharing_meetings.html:38
+msgid "available"
+msgstr "Доступна"
+
+#: bbb/templates/meetings.html:54 bbb/templates/sharing_meetings.html:41
+msgid "everywhere"
+msgstr "отовсюду"
+
+#: bbb/templates/meetings.html:56 bbb/templates/sharing_meetings.html:43
+msgid "inside our lans"
+msgstr "внутри сети предприятия"
+
+#: bbb/templates/meetings.html:61 bbb/templates/sharing_meetings.html:48
+
+msgid "recording"
+msgstr "Запись"
+
+#: bbb/templates/meetings.html:64 bbb/templates/sharing_meetings.html:51
+msgid "record running"
+msgstr "ведется"
+
+#: bbb/templates/meetings.html:66 bbb/templates/sharing_meetings.html:53
+msgid "record not running"
+msgstr "не ведется"
+
+#: bbb/templates/meetings.html:73 bbb/templates/sharing_meetings.html:60
+msgid "here"
+msgstr "здесь"
+
+#: bbb/templates/meetings.html:93
+msgid "start"
+msgstr "начать"
+
+#: bbb/templates/meetings.html:106
+
+msgid "You have not conferences now"
+msgstr "У вас нет конференций пока "
+
+#: bbb/templates/sharing_meetings.html:58
+msgid "link to join"
+msgstr "ссылка на вход"
+
+#: bbb/templates/sharing_meetings.html:72
+msgid "Join"
+msgstr "войти"
+
+#: bbb/templates/sharing_meetings.html:79
+msgid "We have not available conferences now"
+msgstr "У нас нет сейчас доступных конференций"
+
+
