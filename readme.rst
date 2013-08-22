@@ -45,6 +45,8 @@ enough to change the extension to that required by Asterisk.
 
 Screenshots
 ===========
-.. image:: https://github.com/schallis/django-bigbluebutton/raw/master/screenshots/screenshot-create.png
+.. image:: https://github.com/yaricp/django-bigbluebutton/raw/master/screenshots/create.png
 
-.. image:: https://github.com/schallis/django-bigbluebutton/raw/master/screenshots/screenshot-meetings.png
+.. image:: https://github.com/yaricp/django-bigbluebutton/raw/master/screenshots/create_shedule.png
+
+.. image:: https://github.com/yaricp/django-bigbluebutton/raw/master/screenshots/manage.png
