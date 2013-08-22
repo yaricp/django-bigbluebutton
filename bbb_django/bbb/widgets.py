@@ -2,6 +2,8 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
+import settings
+
 main_css= {
             'all': ("/static/css/cupertino/jquery-ui-1.10.3.custom.css",)
         }
@@ -13,7 +15,7 @@ class DateTimePickerWidget(forms.DateInput):
             "/static/js/jquery-1.9.1.js",
             "/static/js/jquery-ui-1.10.3.custom.js",
             "/static/js/jquery-ui-timepicker-addon.js",
-            "/static/js/jquery.ui.datepicker-ru.js",
+            "/static/js/jquery.ui.datepicker-"+settings.LANGUAGE_CODE.split('-')[0]+".js",
         )
  
     def __init__(self, params='', attrs=None, format=None):

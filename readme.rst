@@ -49,4 +49,6 @@ Screenshots
 
 .. image:: https://github.com/yaricp/django-bigbluebutton/raw/master/screenshots/create_shedule.png
 
+.. image:: https://github.com/yaricp/django-bigbluebutton/raw/master/screenshots/shedule_time.png
+
 .. image:: https://github.com/yaricp/django-bigbluebutton/raw/master/screenshots/manage.png
