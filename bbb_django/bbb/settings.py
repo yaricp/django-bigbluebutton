@@ -11,8 +11,8 @@ INDOOR_LANS = [ '192.168.100.0/24',
 FACILITY = "My Firm"
 LOGIN_URL = "/accounts/login"
 
-LANGUAGE_CODE = 'ru-RU'
-
+#LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'en-EN'
 LANGUAGES = (
 	('ru', 'Russian'),
 	('en', 'English'),
